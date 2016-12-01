@@ -10,15 +10,37 @@ import {
   Navigator,
   StyleSheet,
   Text,
-  View
+  View,
+  TextInput,
+  ScrollView,
+  ListView
 } from 'react-native';
 
 import MyScene from './MyScene';
 
-export default class AwesomeProject extends Component {
+class Greeting extends Component {
+  render() {
+    return(
+      <Text>Hello {this.props.name}!</Text>
+    )
+  }
+}
+
+class AwesomeProject extends Component {
+  constructor(props) {
+    super(props);
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    this.state = {
+      dataSource: ds.cloneWithRows([
+        'John', 'Joel', 'James', 'Jimmy', 'Jackson', 'Jillian', 'Julie', 'Devin'
+      ])
+    };
+  }
+
   render() {
     return (
-      <Navigator
+      <View>
+        <Navigator
         initialRoute={{ title: 'My Initial Scene', index: 0 }}
         renderScene={(route, navigator) =>
           <MyScene
@@ -42,6 +64,16 @@ export default class AwesomeProject extends Component {
           />
         }
       />
+        <ScrollView>
+            <View style={{height: 300, backgroundColor: 'powderblue'}} />
+            <View style={{height: 350, backgroundColor: 'skyblue'}} />
+            <TextInput  placeholder="Type here"></TextInput>
+            <View style={{flex: 1}}>
+              <View style={{height: 50, backgroundColor: 'steelblue'}} />
+              <Text style={{flex: 2}}>hey</Text>
+            </View>
+          </ScrollView>
+        </View>
     )
   }
 }
